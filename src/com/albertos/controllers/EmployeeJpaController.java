@@ -38,7 +38,7 @@ public class EmployeeJpaController implements Serializable {
         EntityManager em = null;
         em = getEntityManager();
         Query query = em.createQuery("SELECT a FROM "
-                + "EmployeeRegistration a "
+                + "Employee a "
                 + "WHERE username LIKE :user AND password LIKE :pass");
         query.setParameter("user", username);
         query.setParameter("pass", password);
