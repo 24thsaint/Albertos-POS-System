@@ -5,6 +5,10 @@
  */
 package com.albertos.displays;
 
+import com.albertos.controllers.EMFactory;
+import com.albertos.controllers.IngredientJpaController;
+import com.albertos.objects.Ingredient;
+import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 import javax.swing.JOptionPane;
 
 /**
@@ -183,6 +187,11 @@ public class AddInventoryInterface extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         int dialogButton = JOptionPane.showConfirmDialog(rootPane, "Add New Ingredients In Inventory?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (dialogButton == JOptionPane.YES_OPTION) {
+            IngredientJpaController controller = new IngredientJpaController(EMFactory.getEmf());
+            Ingredient find = controller.findIngredientInventory(Long.getLong(jTextField1.getText()));
+            if(find.equals(jTextField1.getText())){
+                System.out.println("Name already ");
+            }
             this.hide();
         }                
     }//GEN-LAST:event_addButtonActionPerformed
