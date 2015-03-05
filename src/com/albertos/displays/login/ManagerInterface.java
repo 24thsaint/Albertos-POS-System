@@ -207,8 +207,7 @@ public class ManagerInterface extends javax.swing.JFrame {
 
     private void cashierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButtonActionPerformed
         RegistrationInterface registrationInterface = new RegistrationInterface();
-        registrationInterface.setVisible(true);
-        this.dispose();
+        registrationInterface.setVisible(true);        
     }//GEN-LAST:event_cashierButtonActionPerformed
 
     private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed

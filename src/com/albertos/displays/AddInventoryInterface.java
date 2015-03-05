@@ -8,7 +8,6 @@ package com.albertos.displays;
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.IngredientJpaController;
 import com.albertos.objects.Ingredient;
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,12 +39,13 @@ public class AddInventoryInterface extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        ingredientName = new javax.swing.JTextField();
+        quantity = new javax.swing.JTextField();
         returnButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setLayout(new java.awt.CardLayout());
@@ -62,9 +62,9 @@ public class AddInventoryInterface extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("DialogInput", 1, 14)); // NOI18N
         jLabel3.setText("Quantity:");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 204));
+        ingredientName.setBackground(new java.awt.Color(255, 255, 204));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 204));
+        quantity.setBackground(new java.awt.Color(255, 255, 204));
 
         returnButton.setBackground(new java.awt.Color(255, 255, 153));
         returnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/return.png"))); // NOI18N
@@ -107,8 +107,8 @@ public class AddInventoryInterface extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(AddInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(ingredientName, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         AddInventoryPanelLayout.setVerticalGroup(
@@ -121,11 +121,11 @@ public class AddInventoryInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(AddInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ingredientName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(AddInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(AddInventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,11 +173,11 @@ public class AddInventoryInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private InventoryInterface inventory;
+    private IngredientJpaController controller = new IngredientJpaController(EMFactory.getEmf());
 
     public void setInventory(InventoryInterface inventory) {
         this.inventory = inventory;
     }
-
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         inventory.show();
@@ -185,15 +185,37 @@ public class AddInventoryInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_returnButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        int dialogButton = JOptionPane.showConfirmDialog(rootPane, "Add New Ingredients In Inventory?", "Confirm", JOptionPane.YES_NO_OPTION);
+        int dialogButton = JOptionPane.showConfirmDialog(null,
+                "Add New Ingredient to Inventory?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION);
+
         if (dialogButton == JOptionPane.YES_OPTION) {
-            IngredientJpaController controller = new IngredientJpaController(EMFactory.getEmf());
-            Ingredient find = controller.findIngredientInventory(Long.getLong(jTextField1.getText()));
-            if(find.equals(jTextField1.getText())){
-                System.out.println("Name already ");
+            Ingredient ingredient = new Ingredient();
+            ingredient.setIngredientName(ingredientName.getText());
+            ingredient.setTotalQuantity(Integer.parseInt(quantity.getText()));
+
+            Ingredient i = controller.seachByIngredientName(ingredient.getIngredientName());
+
+            if (i == null) {
+                controller.create(ingredient);
+                inventory.refreshTable();
+                
+                JOptionPane.showMessageDialog(null,
+                        "New Ingredient Successfully Added!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);                
+                
+                ingredientName.setText("");
+                quantity.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Ingredient Already Exists in Inventory!",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE);
             }
-            this.hide();
-        }                
+
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
     /**
@@ -234,14 +256,14 @@ public class AddInventoryInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AddInventoryPanel;
     private javax.swing.JButton addButton;
+    private javax.swing.JTextField ingredientName;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField quantity;
     private javax.swing.JButton returnButton;
     // End of variables declaration//GEN-END:variables
 }

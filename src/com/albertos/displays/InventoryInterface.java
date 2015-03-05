@@ -7,6 +7,7 @@ package com.albertos.displays;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.IngredientJpaController;
+import com.albertos.controllers.exceptions.NonexistentEntityException;
 import com.albertos.displays.login.ManagerInterface;
 import com.albertos.objects.Ingredient;
 import java.util.List;
@@ -45,7 +46,6 @@ public class InventoryInterface extends javax.swing.JFrame {
             }
         };
 
-        //dtm = (DefaultTableModel) InventoryTable.getModel();
         List<Ingredient> ingredients = controller.findIngredientInventoryEntities();
         for (Ingredient ingredient : ingredients) {
 
@@ -306,17 +306,50 @@ public class InventoryInterface extends javax.swing.JFrame {
         if (InventoryTable.getSelectedRowCount() <= 0) {
             JOptionPane.showMessageDialog(rootPane, "Please Select First", "Warning!!!", JOptionPane.ERROR_MESSAGE);
         } else {
+            String ingredientName
+                    = (String) InventoryTable.getValueAt(InventoryTable.getSelectedRow(), 0);
+
+            Ingredient ingredient = controller.seachByIngredientName(ingredientName);
+
+            edit.getNameTextfield().setText(ingredient.getIngredientName());
+            edit.getQuantityTextfield().setText("" + ingredient.getTotalQuantity());
+            edit.getUsedQuantity().setText("" + ingredient.getUsedQuantity());
+            edit.setIngredient(ingredient);
             edit.show();
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         if (InventoryTable.getSelectedRowCount() <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Please Select First", "Warning!!!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "Error in deletion: No selected entry!",
+                    "Warning!!!",
+                    JOptionPane.ERROR_MESSAGE);
         } else {
-            int confirm = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to delete the selected ingredient?", "Confirm", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the selected ingredient?", "Confirm", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                dtm.removeRow(InventoryTable.getSelectedRow());
+
+                String ingredientName
+                        = (String) InventoryTable.getValueAt(InventoryTable.getSelectedRow(), 0);
+
+                Ingredient ingredient = controller.seachByIngredientName(ingredientName);
+
+                try {
+                    controller.destroy(ingredient.getId());
+                } catch (NonexistentEntityException ex) {
+                    JOptionPane.showMessageDialog(null,
+                            "Error in deletion: \n" + ex.getMessage(),
+                            "Fatal Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                refreshTable();
+                
+                JOptionPane.showMessageDialog(null,
+                        "Deletion Successful",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_DeleteButtonActionPerformed
