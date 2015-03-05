@@ -13,9 +13,7 @@
  */
 package com.albertos.displays.menu;
 
-import com.albertos.controllers.PizzaJpaController;
 import com.albertos.controllers.exceptions.NonexistentEntityException;
-import com.albertos.controllers.EMFactory;
 import com.albertos.objects.Inventory;
 import com.albertos.objects.Pizza;
 import java.awt.CardLayout;
@@ -66,6 +64,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         rootPane = new javax.swing.JPanel();
         displayPanel = new javax.swing.JPanel();
         header = new javax.swing.JLabel();
@@ -108,11 +107,13 @@ public class InventoryDisplay extends javax.swing.JFrame {
 
         displayPanel.setBackground(new java.awt.Color(255, 255, 153));
 
-        header.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        header.setFont(new java.awt.Font("Century Schoolbook L", 1, 36)); // NOI18N
+        header.setForeground(new java.awt.Color(204, 0, 0));
         header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setText("Albertos Pizza");
         header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        labelSearch.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 18)); // NOI18N
         labelSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/filter.png"))); // NOI18N
         labelSearch.setText("Search:");
 
@@ -127,6 +128,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             }
         });
 
+        actionGo.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
         actionGo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/search.png"))); // NOI18N
         actionGo.setText("GO");
         actionGo.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -155,8 +157,6 @@ public class InventoryDisplay extends javax.swing.JFrame {
         resultTable.setRowHeight(22);
         resultTable.setSelectionBackground(new java.awt.Color(255, 204, 204));
         resultTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        resultTable.setShowHorizontalLines(true);
-        resultTable.setShowVerticalLines(true);
         resultTable.getTableHeader().setReorderingAllowed(false);
         scrollerPane.setViewportView(resultTable);
         if (resultTable.getColumnModel().getColumnCount() > 0) {
@@ -165,6 +165,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             resultTable.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
+        actionModify.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
         actionModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/book_edit.png"))); // NOI18N
         actionModify.setText("Modify Selected Pizza");
         actionModify.addActionListener(new java.awt.event.ActionListener() {
@@ -173,6 +174,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             }
         });
 
+        actionDeleted.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
         actionDeleted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/book_delete.png"))); // NOI18N
         actionDeleted.setText("Delete Selected Pizza");
         actionDeleted.addActionListener(new java.awt.event.ActionListener() {
@@ -181,6 +183,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             }
         });
 
+        actionAdd.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
         actionAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/plus.png"))); // NOI18N
         actionAdd.setText("Add New Pizza");
         actionAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +199,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             .addGroup(displayPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(scrollerPane)
                     .addGroup(displayPanelLayout.createSequentialGroup()
                         .addComponent(labelSearch)
@@ -204,19 +208,18 @@ public class InventoryDisplay extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(actionGo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(displayPanelLayout.createSequentialGroup()
-                        .addComponent(actionAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                        .addComponent(actionAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(actionModify, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(actionDeleted))
-                    .addComponent(header, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(actionDeleted)))
                 .addContainerGap())
         );
         displayPanelLayout.setVerticalGroup(
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(displayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(actionGo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,12 +228,12 @@ public class InventoryDisplay extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(actionDeleted, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(actionModify, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(actionAdd))
-                .addContainerGap())
+                    .addComponent(actionAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         rootPane.add(displayPanel, "displayCard");
@@ -403,7 +406,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
                         .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(actionBack)
                     .addComponent(actionAddPizza))
@@ -437,18 +440,35 @@ public class InventoryDisplay extends javax.swing.JFrame {
 
         rootPane.add(modificationsPanel, "modificationsCard");
 
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rootPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rootPane, javax.swing.GroupLayout.PREFERRED_SIZE, 571, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDesktopPane1.setLayer(rootPane, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rootPane, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -744,6 +764,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
     private javax.swing.JLabel headerSecondPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

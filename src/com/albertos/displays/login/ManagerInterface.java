@@ -5,6 +5,8 @@
  */
 package com.albertos.displays.login;
 
+import com.albertos.displays.InventoryInterface;
+
 /**
  *
  * @author hero
@@ -57,6 +59,11 @@ public class ManagerInterface extends javax.swing.JFrame {
         cashierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/AS.png"))); // NOI18N
         cashierButton.setText("Cashier Registration");
         cashierButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        cashierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierButtonActionPerformed(evt);
+            }
+        });
 
         inventoryButton.setBackground(new java.awt.Color(153, 153, 153));
         inventoryButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
@@ -64,6 +71,11 @@ public class ManagerInterface extends javax.swing.JFrame {
         inventoryButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/palet01.png"))); // NOI18N
         inventoryButton.setText("Inventory");
         inventoryButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        inventoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventoryButtonActionPerformed(evt);
+            }
+        });
 
         menuManagerButton.setBackground(new java.awt.Color(153, 153, 153));
         menuManagerButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
@@ -192,6 +204,18 @@ public class ManagerInterface extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cashierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierButtonActionPerformed
+        RegistrationInterface registrationInterface = new RegistrationInterface();
+        registrationInterface.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cashierButtonActionPerformed
+
+    private void inventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryButtonActionPerformed
+        InventoryInterface inventoryInterface = new InventoryInterface();
+        inventoryInterface.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_inventoryButtonActionPerformed
 
     /**
      * @param args the command line arguments
