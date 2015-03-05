@@ -3,6 +3,8 @@
   <persistence-unit name="POS_SYSTEM" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>com.albertos.objects.Pizza</class>
+    <class>com.albertos.objects.Employee</class>
+    <class>com.albertos.objects.Ingredient</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/albertos_pos_system?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
