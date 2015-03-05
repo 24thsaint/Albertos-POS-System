@@ -88,22 +88,22 @@ public class RegistrationInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 153));
 
         jLabel2.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("First Name:");
 
         jLabel3.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Last Name:");
 
         jLabel4.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Gender:");
 
         jLabel6.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Address:");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -112,42 +112,44 @@ public class RegistrationInterface extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jRadioButton1.setBackground(new java.awt.Color(255, 255, 153));
         buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton1.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
+        jRadioButton1.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton1.setText("Male");
 
-        jRadioButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jRadioButton2.setBackground(new java.awt.Color(255, 255, 153));
         buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton2.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 18)); // NOI18N
+        jRadioButton2.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButton2.setText("Female");
 
         jLabel7.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Username:");
 
         jLabel8.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Email:");
 
         jLabel9.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Password:");
 
         jLabel10.setFont(new java.awt.Font("Rod", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Confirm Password:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
 
-        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loginsystemInterface/register.png"))); // NOI18N
+        registerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/register.png"))); // NOI18N
         registerButton.setContentAreaFilled(false);
 
-        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loginsystemInterface/cancel.png"))); // NOI18N
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/cancel.png"))); // NOI18N
         cancelButton.setContentAreaFilled(false);
 
         jLabel12.setFont(new java.awt.Font("Rod", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Cashier Registration");
 
@@ -214,7 +216,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
@@ -263,7 +265,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 153));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
