@@ -28,7 +28,20 @@ public class Ingredient implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String ingredientName;
-    private int quantity;
+    private int totalQuantity;
+    private int usedQuantity;
+
+    public int getUsedQuantity() {
+        return usedQuantity;
+    }
+
+    public void setUsedQuantity(int usedQuantity) {
+        this.usedQuantity = usedQuantity;
+    }
+
+    public int getRemainingQuantity() {
+        return (totalQuantity - usedQuantity);
+    }
 
     public String getIngredientName() {
         return ingredientName;
@@ -38,16 +51,16 @@ public class Ingredient implements Serializable {
         this.ingredientName = ingredientName;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTotalQuantity(int quantity) {
+        this.totalQuantity = quantity;
     }
 
     public void subtractQuantity(int quantity) {
-        this.quantity -= quantity;
+        this.totalQuantity -= quantity;
     }
 
     public Long getId() {

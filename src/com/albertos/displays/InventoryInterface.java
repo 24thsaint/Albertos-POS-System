@@ -5,6 +5,10 @@
  */
 package com.albertos.displays;
 
+import com.albertos.controllers.EMFactory;
+import com.albertos.controllers.IngredientJpaController;
+import com.albertos.objects.Ingredient;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +18,46 @@ import javax.swing.table.DefaultTableModel;
  */
 public class InventoryInterface extends javax.swing.JFrame {
 
+    private IngredientJpaController controller = new IngredientJpaController(EMFactory.getEmf());
+
     /**
      * Creates new form EmployeeInterface
      */
     public InventoryInterface() {
         initComponents();
-        dtm = (DefaultTableModel) InventoryTable.getModel();
+        refreshTable();
+    }
+
+    public void refreshTable() {
+        dtm = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Ingredient", "Total Quantity", "Used Quantity", "Remaining Quantity"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
+
+        //dtm = (DefaultTableModel) InventoryTable.getModel();
+        List<Ingredient> ingredients = controller.findIngredientInventoryEntities();
+        for (Ingredient ingredient : ingredients) {
+
+            String data1 = ingredient.getIngredientName();
+            String data2 = "" + ingredient.getTotalQuantity();
+            String data3 = "" + ingredient.getUsedQuantity();
+            String data4 = "" + ingredient.getRemainingQuantity();
+
+            String[] data = {data1, data2, data3, data4};
+            dtm.addRow(data);
+        }
+
+        InventoryTable.setModel(dtm);
     }
 
     /**
@@ -242,10 +280,6 @@ public class InventoryInterface extends javax.swing.JFrame {
         AddInventoryInterface add = new AddInventoryInterface();
         add.setInventory(this);
         add.show();
-        dtm.addRow(new String[]{"hello", "how", "are", "you"});
-        dtm.addRow(new String[]{"tristan", "how", "are", "you"});
-        dtm.addRow(new String[]{"karlo", "how", "are", "you"});
-        dtm.addRow(new String[]{"macadangdang", "how", "are", "you"});
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
