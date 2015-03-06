@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albertos.displays;
+package com.albertos.displays.inventory;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.IngredientJpaController;

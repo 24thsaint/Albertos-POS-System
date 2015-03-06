@@ -5,7 +5,8 @@
  */
 package com.albertos.displays.login;
 
-import com.albertos.displays.InventoryInterface;
+import com.albertos.displays.inventory.InventoryInterface;
+import com.albertos.displays.menu.MenuManagerInterface;
 
 /**
  *
@@ -80,9 +81,14 @@ public class ManagerInterface extends javax.swing.JFrame {
         menuManagerButton.setBackground(new java.awt.Color(153, 153, 153));
         menuManagerButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
         menuManagerButton.setForeground(new java.awt.Color(0, 0, 0));
-        menuManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/208193452.png"))); // NOI18N
+        menuManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/PizzaIcon.png"))); // NOI18N
         menuManagerButton.setText("Menu Manager");
         menuManagerButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        menuManagerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuManagerButtonActionPerformed(evt);
+            }
+        });
 
         cashierManagerButton.setBackground(new java.awt.Color(153, 153, 153));
         cashierManagerButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
@@ -216,6 +222,12 @@ public class ManagerInterface extends javax.swing.JFrame {
         inventoryInterface.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_inventoryButtonActionPerformed
+
+    private void menuManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuManagerButtonActionPerformed
+        MenuManagerInterface inventoryDisplay = new MenuManagerInterface();
+        inventoryDisplay.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_menuManagerButtonActionPerformed
 
     /**
      * @param args the command line arguments
