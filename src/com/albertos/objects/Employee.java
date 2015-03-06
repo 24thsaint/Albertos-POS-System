@@ -26,6 +26,9 @@ public class Employee implements Serializable {
     private Long id;
     private String lastname;
     private String firstName;
+    private String gender;
+    private String address;
+
     private String username;
     private String password;
 
@@ -43,6 +46,22 @@ public class Employee implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getUsername() {
@@ -93,10 +112,10 @@ public class Employee implements Serializable {
     public String toString() {
         return "EMFactory.EmployeeRegistration[ id=" + id + " ]";
     }
-    
-    public static Employee validate(String username, String password){
+
+    public static Employee validate(String username, String password) {
         EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
-        
+
         return controller.validate(username, password);
     }
 

@@ -5,8 +5,6 @@ package com.albertos.controllers;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import com.albertos.objects.Ingredient;
 import com.albertos.controllers.exceptions.NonexistentEntityException;
 import java.io.Serializable;
@@ -46,19 +44,18 @@ public class IngredientJpaController implements Serializable {
             }
         }
     }
-    
+
     public Ingredient seachByIngredientName(String name) {
         EntityManager em = null;
         Query query = null;
         try {
             em = getEntityManager();
-            query = em.createQuery("SELECT i "
-                    + "FROM IngredientInventory i WHERE i.ingredientName=:qq");
+            query = em.createQuery("SELECT i FROM Ingredient i WHERE i.ingredientName LIKE :qq");
             query.setParameter("qq", name);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            return (Ingredient) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
         }
-        return (Ingredient) query.getSingleResult();
     }
 
     public void edit(Ingredient ingredientInventory) throws NonexistentEntityException, Exception {
@@ -150,5 +147,5 @@ public class IngredientJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
