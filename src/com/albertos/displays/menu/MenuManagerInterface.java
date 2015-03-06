@@ -14,6 +14,7 @@
 package com.albertos.displays.menu;
 
 import com.albertos.controllers.exceptions.NonexistentEntityException;
+import com.albertos.displays.login.ManagerInterface;
 import com.albertos.objects.Inventory;
 import com.albertos.objects.Pizza;
 import java.awt.CardLayout;
@@ -31,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Rave Noren Gidor-Sambo Villavicencio-Arevalo
  */
-public class InventoryDisplay extends javax.swing.JFrame {
+public class MenuManagerInterface extends javax.swing.JFrame {
 
     private Inventory inventory;
     private Long modificationId;
@@ -43,7 +44,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
     /**
      * Creates new form InventoryDisplay
      */
-    public InventoryDisplay() {
+    public MenuManagerInterface() {
         initComponents();
 
         DefaultListModel dlm = new DefaultListModel();
@@ -76,6 +77,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
         actionModify = new javax.swing.JButton();
         actionDeleted = new javax.swing.JButton();
         actionAdd = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         modificationsPanel = new javax.swing.JPanel();
         pizzaFieldsPanel = new javax.swing.JPanel();
         labelPizzaName = new javax.swing.JLabel();
@@ -129,9 +131,12 @@ public class InventoryDisplay extends javax.swing.JFrame {
             }
         });
 
+        actionGo.setBackground(new java.awt.Color(255, 255, 153));
         actionGo.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        actionGo.setForeground(new java.awt.Color(1, 1, 1));
         actionGo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/search.png"))); // NOI18N
         actionGo.setText("GO");
+        actionGo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionGo.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         scrollerPane.setBackground(new java.awt.Color(0, 0, 0));
@@ -164,32 +169,56 @@ public class InventoryDisplay extends javax.swing.JFrame {
             resultTable.getColumnModel().getColumn(0).setMinWidth(50);
             resultTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             resultTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            resultTable.getColumnModel().getColumn(1).setResizable(false);
+            resultTable.getColumnModel().getColumn(2).setMinWidth(500);
+            resultTable.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
-        actionModify.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 12)); // NOI18N
+        actionModify.setBackground(new java.awt.Color(255, 255, 153));
+        actionModify.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        actionModify.setForeground(new java.awt.Color(1, 1, 1));
         actionModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/book_edit.png"))); // NOI18N
         actionModify.setText("Modify Selected Pizza");
+        actionModify.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionModifyActionPerformed(evt);
             }
         });
 
-        actionDeleted.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 12)); // NOI18N
+        actionDeleted.setBackground(new java.awt.Color(255, 255, 153));
+        actionDeleted.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        actionDeleted.setForeground(new java.awt.Color(1, 1, 1));
         actionDeleted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/book_delete.png"))); // NOI18N
         actionDeleted.setText("Delete Selected Pizza");
+        actionDeleted.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionDeleted.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionDeletedActionPerformed(evt);
             }
         });
 
-        actionAdd.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 12)); // NOI18N
+        actionAdd.setBackground(new java.awt.Color(255, 255, 153));
+        actionAdd.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        actionAdd.setForeground(new java.awt.Color(1, 1, 1));
         actionAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/plus.png"))); // NOI18N
         actionAdd.setText("Add New Pizza");
+        actionAdd.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionAddActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setBackground(new java.awt.Color(255, 255, 153));
+        cancelButton.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        cancelButton.setForeground(new java.awt.Color(1, 1, 1));
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/back.png"))); // NOI18N
+        cancelButton.setText("Cancel");
+        cancelButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -205,15 +234,17 @@ public class InventoryDisplay extends javax.swing.JFrame {
                     .addGroup(displayPanelLayout.createSequentialGroup()
                         .addComponent(labelSearch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(actionGo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(searchKey)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(actionGo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(displayPanelLayout.createSequentialGroup()
                         .addComponent(actionAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(actionModify, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(actionDeleted, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(actionDeleted, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         displayPanelLayout.setVerticalGroup(
@@ -227,13 +258,14 @@ public class InventoryDisplay extends javax.swing.JFrame {
                     .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSearch))
                 .addGap(12, 12, 12)
-                .addComponent(scrollerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(scrollerPane, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(actionDeleted, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(actionAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(actionModify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(actionModify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(actionAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(actionDeleted, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         rootPane.add(displayPanel, "displayCard");
@@ -242,12 +274,20 @@ public class InventoryDisplay extends javax.swing.JFrame {
 
         pizzaFieldsPanel.setBackground(new java.awt.Color(255, 255, 102));
         pizzaFieldsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pizzaFieldsPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        labelPizzaName.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        labelPizzaName.setForeground(new java.awt.Color(1, 1, 0));
         labelPizzaName.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         labelPizzaName.setText("Pizza Name");
+        pizzaFieldsPanel.add(labelPizzaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+        pizzaFieldsPanel.add(pizzaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 330, 34));
 
+        labelPizzaDescription.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        labelPizzaDescription.setForeground(new java.awt.Color(1, 1, 0));
         labelPizzaDescription.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         labelPizzaDescription.setText("Description");
+        pizzaFieldsPanel.add(labelPizzaDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         pizzaDescription.setColumns(20);
         pizzaDescription.setLineWrap(true);
@@ -255,27 +295,45 @@ public class InventoryDisplay extends javax.swing.JFrame {
         pizzaDescription.setWrapStyleWord(true);
         descriptionScroller.setViewportView(pizzaDescription);
 
+        pizzaFieldsPanel.add(descriptionScroller, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 330, 92));
+
+        labelPrice.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        labelPrice.setForeground(new java.awt.Color(1, 1, 0));
         labelPrice.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         labelPrice.setText("9-inch price");
+        pizzaFieldsPanel.add(labelPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 96, -1));
+        pizzaFieldsPanel.add(pizzaPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, 200, 30));
 
+        actionAddPizza.setBackground(new java.awt.Color(255, 255, 153));
+        actionAddPizza.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
         actionAddPizza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/plus.png"))); // NOI18N
         actionAddPizza.setText("Add Pizza");
+        actionAddPizza.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionAddPizza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionAddPizzaActionPerformed(evt);
             }
         });
+        pizzaFieldsPanel.add(actionAddPizza, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, 170, 50));
 
+        labelPrice1.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        labelPrice1.setForeground(new java.awt.Color(1, 1, 0));
         labelPrice1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         labelPrice1.setText("11-inch price");
+        pizzaFieldsPanel.add(labelPrice1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, -1, -1));
+        pizzaFieldsPanel.add(pizzaPrice1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 200, 30));
 
+        actionBack.setBackground(new java.awt.Color(255, 255, 153));
+        actionBack.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
         actionBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/back.png"))); // NOI18N
         actionBack.setText("Back");
+        actionBack.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         actionBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionBackActionPerformed(evt);
             }
         });
+        pizzaFieldsPanel.add(actionBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 150, 50));
 
         availableSelection.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Hotdog", "Ham", "Cheese" };
@@ -285,21 +343,35 @@ public class InventoryDisplay extends javax.swing.JFrame {
         availableSelection.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(availableSelection);
 
+        pizzaFieldsPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 250, 169));
+
+        jButton1.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
         jButton1.setText("Add >>");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        pizzaFieldsPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 120, -1));
 
+        jButton2.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
         jButton2.setText("<< Remove");
+        pizzaFieldsPanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 120, -1));
 
         addedSelection.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(addedSelection);
 
-        jLabel2.setText("Available Ingredients");
+        pizzaFieldsPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 270, 169));
 
+        jLabel2.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(1, 1, 0));
+        jLabel2.setText("Available Ingredients");
+        pizzaFieldsPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(1, 1, 0));
         jLabel3.setText("Added Pizza Ingredients");
+        pizzaFieldsPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, -1, -1));
 
         searchAvailable.setText("Search");
         searchAvailable.addCaretListener(new javax.swing.event.CaretListener() {
@@ -315,106 +387,15 @@ public class InventoryDisplay extends javax.swing.JFrame {
                 searchAvailableFocusLost(evt);
             }
         });
+        pizzaFieldsPanel.add(searchAvailable, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 250, 30));
 
         searchAdded.setText("Search");
+        pizzaFieldsPanel.add(searchAdded, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 270, 30));
 
-        javax.swing.GroupLayout pizzaFieldsPanelLayout = new javax.swing.GroupLayout(pizzaFieldsPanel);
-        pizzaFieldsPanel.setLayout(pizzaFieldsPanelLayout);
-        pizzaFieldsPanelLayout.setHorizontalGroup(
-            pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addComponent(actionBack, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(actionAddPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelPizzaName, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pizzaName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(316, 316, 316))
-                    .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pizzaFieldsPanelLayout.createSequentialGroup()
-                                    .addComponent(descriptionScroller, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(labelPrice1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(labelPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(pizzaPrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(pizzaPrice1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(labelPizzaDescription))
-                            .addComponent(jLabel2)
-                            .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton2)
-                                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(searchAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(searchAdded, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        pizzaFieldsPanelLayout.setVerticalGroup(
-            pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(labelPizzaName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pizzaName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelPizzaDescription)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pizzaPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelPrice))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pizzaPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelPrice1)))
-                    .addComponent(descriptionScroller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pizzaFieldsPanelLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchAdded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addGroup(pizzaFieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(actionBack)
-                    .addComponent(actionAddPizza))
-                .addContainerGap())
-        );
-
-        headerSecondPanel.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        headerSecondPanel.setFont(new java.awt.Font("Century Schoolbook L", 1, 48)); // NOI18N
+        headerSecondPanel.setForeground(new java.awt.Color(204, 0, 0));
         headerSecondPanel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerSecondPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/resize Pizza.png"))); // NOI18N
         headerSecondPanel.setText("Albertos Pizza");
         headerSecondPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -422,9 +403,9 @@ public class InventoryDisplay extends javax.swing.JFrame {
         modificationsPanel.setLayout(modificationsPanelLayout);
         modificationsPanelLayout.setHorizontalGroup(
             modificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(modificationsPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modificationsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(modificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(modificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(headerSecondPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pizzaFieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -432,7 +413,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
         modificationsPanelLayout.setVerticalGroup(
             modificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modificationsPanelLayout.createSequentialGroup()
-                .addComponent(headerSecondPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerSecondPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pizzaFieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -477,32 +458,35 @@ public class InventoryDisplay extends javax.swing.JFrame {
         resultTable = new JTable();
         resultTable.setBackground(new java.awt.Color(255, 255, 102));
         resultTable.setForeground(new java.awt.Color(0, 0, 0));
-        resultTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{
-                    "ID", "Pizza Name", "Description"
-                }
+         resultTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Pizza Name", "Description"
+            }
         ) {
-            boolean[] canEdit = new boolean[]{
+            boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         resultTable.setGridColor(new java.awt.Color(0, 0, 0));
         resultTable.setRowHeight(22);
         resultTable.setSelectionBackground(new java.awt.Color(255, 204, 204));
         resultTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        resultTable.setShowHorizontalLines(true);
-        resultTable.setShowVerticalLines(true);
         resultTable.getTableHeader().setReorderingAllowed(false);
         scrollerPane.setViewportView(resultTable);
         if (resultTable.getColumnModel().getColumnCount() > 0) {
             resultTable.getColumnModel().getColumn(0).setMinWidth(50);
             resultTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             resultTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            resultTable.getColumnModel().getColumn(1).setResizable(false);
+            resultTable.getColumnModel().getColumn(2).setMinWidth(500);
+            resultTable.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
         List<Pizza> pizzas = Inventory.getController().findPizzaEntities();
@@ -550,7 +534,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
             try {
                 Inventory.getController().destroy(Long.parseLong(id));
             } catch (NonexistentEntityException ex) {
-                Logger.getLogger(InventoryDisplay.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MenuManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             refreshTable();
@@ -712,6 +696,12 @@ public class InventoryDisplay extends javax.swing.JFrame {
         addedList.addElement(availableSelection.getSelectedValue());
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        ManagerInterface managerInterface = new ManagerInterface();
+        managerInterface.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -729,20 +719,21 @@ public class InventoryDisplay extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InventoryDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuManagerInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InventoryDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuManagerInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InventoryDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuManagerInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InventoryDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuManagerInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InventoryDisplay().setVisible(true);
+                new MenuManagerInterface().setVisible(true);
             }
         });
     }
@@ -756,6 +747,7 @@ public class InventoryDisplay extends javax.swing.JFrame {
     private javax.swing.JButton actionModify;
     private javax.swing.JList addedSelection;
     private javax.swing.JList availableSelection;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JScrollPane descriptionScroller;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JLabel header;

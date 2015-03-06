@@ -212,7 +212,7 @@
                       <Font name="DejaVu Sans Condensed" size="14" style="1"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/com/albertos/resources/208193452.png"/>
+                      <Image iconType="3" name="/com/albertos/resources/PizzaIcon.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Menu Manager"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -223,6 +223,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuManagerButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="cashierManagerButton">
                   <Properties>

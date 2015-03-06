@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albertos.displays;
+package com.albertos.displays.inventory;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.IngredientJpaController;
 import com.albertos.objects.Ingredient;
+import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,8 +45,7 @@ public class AddInventoryInterface extends javax.swing.JFrame {
         returnButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setLayout(new java.awt.CardLayout());
@@ -179,9 +179,10 @@ public class AddInventoryInterface extends javax.swing.JFrame {
         this.inventory = inventory;
     }
 
+
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         inventory.show();
-        this.hide();
+        this.dispose();
     }//GEN-LAST:event_returnButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -200,12 +201,12 @@ public class AddInventoryInterface extends javax.swing.JFrame {
             if (i == null) {
                 controller.create(ingredient);
                 inventory.refreshTable();
-                
+
                 JOptionPane.showMessageDialog(null,
                         "New Ingredient Successfully Added!",
                         "Success",
-                        JOptionPane.INFORMATION_MESSAGE);                
-                
+                        JOptionPane.INFORMATION_MESSAGE);
+
                 ingredientName.setText("");
                 quantity.setText("");
             } else {
