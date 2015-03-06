@@ -33,31 +33,25 @@ public class Employee implements Serializable {
     private String password;
 
     // @Temporal(TemporalType.TIMESTAMP)
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<AccessLog> login = new ArrayList<>();
-
-    //  @Temporal(TemporalType.TIMESTAMP)
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<AccessLog> logout = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<AccessLog> logs = new ArrayList<>();
 
     public void employeeLogin() {
         AccessLog accessLog = new AccessLog();
         accessLog.setAccessType(com.albertos.objects.enumerations.AccessType.LOGIN);
         accessLog.setAccessTime(new Date());
+        logs.add(accessLog);
     }
 
     public void employeeLogout() {
         AccessLog accessLog = new AccessLog();
         accessLog.setAccessType(com.albertos.objects.enumerations.AccessType.LOGOUT);
         accessLog.setAccessTime(new Date());
+        logs.add(accessLog);
     }
 
-    public List<AccessLog> getLoginLogs() {
-        return login;
-    }
-
-    public List<AccessLog> getLogoutLogs() {
-        return logout;
+    public List<AccessLog> getLogs() {
+        return logs;
     }
 
     public String getLastname() {
