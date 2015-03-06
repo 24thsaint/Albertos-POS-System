@@ -425,17 +425,21 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rootPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 808, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(rootPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rootPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 647, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(rootPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jDesktopPane1.setLayer(rootPane, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -453,6 +457,188 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void searchAvailableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchAvailableFocusLost
+        searchAvailable.setText("Search");
+    }//GEN-LAST:event_searchAvailableFocusLost
+
+    private void searchAvailableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchAvailableFocusGained
+        searchAvailable.setText("");
+    }//GEN-LAST:event_searchAvailableFocusGained
+
+    private void searchAvailableCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchAvailableCaretUpdate
+        for (int i = 0; i < availableSelection.getModel().getSize(); i++) {
+            System.out.println(i);
+            if (searchAvailable.getText().toUpperCase()
+                .contains(availableSelection.getModel().getElementAt(i).toString().toUpperCase())) {
+                availableSelection.setSelectedIndex(i);
+            }
+        }
+        System.out.println(availableSelection.getModel().getSize());
+    }//GEN-LAST:event_searchAvailableCaretUpdate
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        addedList.addElement(availableSelection.getSelectedValue());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void actionBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionBackActionPerformed
+        returnToMain();
+    }//GEN-LAST:event_actionBackActionPerformed
+
+    private void actionAddPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionAddPizzaActionPerformed
+        Pizza pizza = new Pizza();
+        if (isNew) {
+            try {
+                inventory.addPizza(
+                    this.pizzaName.getText(),
+                    this.pizzaDescription.getText(),
+                    Double.parseDouble(this.pizzaPrice.getText()),
+                    Double.parseDouble(this.pizzaPrice1.getText())
+                );
+            } catch (EntityExistsException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Entry creation failed!\n" + e.getMessage(),
+                    "Failed",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Entry creation failed: Please check blank fields!\n",
+                    "Failed",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Entry creation failed: Please check blank fields!\n",
+                    "Failed",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "New Pizza menu created successfuly!",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                inventory.getPizzaDataForModification().setName(this.pizzaName.getText());
+                inventory.getPizzaDataForModification().setDescription(this.pizzaDescription.getText());
+                inventory.getPizzaDataForModification().setNineInchPizzaPrice(Double.parseDouble(this.pizzaPrice.getText()));
+                inventory.getPizzaDataForModification().setElevenInchPizzaPrice(Double.parseDouble(this.pizzaPrice1.getText()));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Entry creation failed: Please check blank fields!\n",
+                    "Failed",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Entry creation failed: Please check blank fields!\n",
+                    "Failed",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            try {
+                Inventory.getController().edit(inventory.getPizzaDataForModification());
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Update successful!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Update failed!\n" + ex.getMessage(),
+                    "Success",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        returnToMain();
+    }//GEN-LAST:event_actionAddPizzaActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        ManagerInterface managerInterface = new ManagerInterface();
+        managerInterface.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void actionAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionAddActionPerformed
+        actionAddPizza.setText("Add Pizza");
+
+        this.pizzaName.setText("");
+        this.pizzaDescription.setText("");
+        this.pizzaPrice.setText("");
+        this.pizzaPrice1.setText("");
+
+        card.show(rootPane, "modificationsCard");
+        isNew = true;
+    }//GEN-LAST:event_actionAddActionPerformed
+
+    private void actionDeletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionDeletedActionPerformed
+        int confirmRequest = JOptionPane.showConfirmDialog(
+            null,
+            "Are you sure you want to delete the selected Pizza?",
+            "Confirm",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirmRequest == JOptionPane.YES_OPTION) {
+
+            String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+
+            try {
+                Inventory.getController().destroy(Long.parseLong(id));
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(MenuManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            refreshTable();
+        } else {
+            //do nothing
+        }
+    }//GEN-LAST:event_actionDeletedActionPerformed
+
+    private void actionModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionModifyActionPerformed
+        if (resultTable.getSelectedRowCount() < 1) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Cannot modify: No pizza selected!",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        actionAddPizza.setText("Save Changes");
+        card.show(rootPane, "modificationsCard");
+        isNew = false;
+
+        String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+        inventory.setPizzaDataForModification(Inventory.getController().findPizza(Long.parseLong(id)));
+
+        this.pizzaName.setText(inventory.getPizzaDataForModification().getName());
+        this.pizzaDescription.setText(inventory.getPizzaDataForModification().getDescription());
+        this.pizzaPrice.setText(inventory.getPizzaDataForModification().getNineInchPizzaPrice() + "");
+        this.pizzaPrice1.setText(inventory.getPizzaDataForModification().getElevenInchPizzaPrice() + "");
+    }//GEN-LAST:event_actionModifyActionPerformed
+
+    private void searchKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKeyActionPerformed
+        search(searchKey.getText());
+    }//GEN-LAST:event_searchKeyActionPerformed
+
+    private void searchKeyCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchKeyCaretUpdate
+        search(searchKey.getText());
+    }//GEN-LAST:event_searchKeyCaretUpdate
 
     private void refreshTable() {
         resultTable = new JTable();
@@ -519,188 +705,6 @@ public class MenuManagerInterface extends javax.swing.JFrame {
             }
         }
     }
-
-    private void actionDeletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionDeletedActionPerformed
-        int confirmRequest = JOptionPane.showConfirmDialog(
-                null,
-                "Are you sure you want to delete the selected Pizza?",
-                "Confirm",
-                JOptionPane.YES_NO_OPTION);
-
-        if (confirmRequest == JOptionPane.YES_OPTION) {
-
-            String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
-
-            try {
-                Inventory.getController().destroy(Long.parseLong(id));
-            } catch (NonexistentEntityException ex) {
-                Logger.getLogger(MenuManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            refreshTable();
-        } else {
-            //do nothing            
-        }
-    }//GEN-LAST:event_actionDeletedActionPerformed
-
-    private void actionAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionAddActionPerformed
-        actionAddPizza.setText("Add Pizza");
-
-        this.pizzaName.setText("");
-        this.pizzaDescription.setText("");
-        this.pizzaPrice.setText("");
-        this.pizzaPrice1.setText("");
-
-        card.show(rootPane, "modificationsCard");
-        isNew = true;
-    }//GEN-LAST:event_actionAddActionPerformed
-
-    private void actionModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionModifyActionPerformed
-        if (resultTable.getSelectedRowCount() < 1) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Cannot modify: No pizza selected!",
-                    "Warning",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        actionAddPizza.setText("Save Changes");
-        card.show(rootPane, "modificationsCard");
-        isNew = false;
-
-        String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
-        inventory.setPizzaDataForModification(Inventory.getController().findPizza(Long.parseLong(id)));
-
-        this.pizzaName.setText(inventory.getPizzaDataForModification().getName());
-        this.pizzaDescription.setText(inventory.getPizzaDataForModification().getDescription());
-        this.pizzaPrice.setText(inventory.getPizzaDataForModification().getNineInchPizzaPrice() + "");
-        this.pizzaPrice1.setText(inventory.getPizzaDataForModification().getElevenInchPizzaPrice() + "");
-    }//GEN-LAST:event_actionModifyActionPerformed
-
-    private void actionBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionBackActionPerformed
-        returnToMain();
-    }//GEN-LAST:event_actionBackActionPerformed
-
-    private void actionAddPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionAddPizzaActionPerformed
-        Pizza pizza = new Pizza();
-        if (isNew) {
-            try {
-                inventory.addPizza(
-                        this.pizzaName.getText(),
-                        this.pizzaDescription.getText(),
-                        Double.parseDouble(this.pizzaPrice.getText()),
-                        Double.parseDouble(this.pizzaPrice1.getText())
-                );
-            } catch (EntityExistsException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Entry creation failed!\n" + e.getMessage(),
-                        "Failed",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Entry creation failed: Please check blank fields!\n",
-                        "Failed",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Entry creation failed: Please check blank fields!\n",
-                        "Failed",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            }
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "New Pizza menu created successfuly!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            try {
-                inventory.getPizzaDataForModification().setName(this.pizzaName.getText());
-                inventory.getPizzaDataForModification().setDescription(this.pizzaDescription.getText());
-                inventory.getPizzaDataForModification().setNineInchPizzaPrice(Double.parseDouble(this.pizzaPrice.getText()));
-                inventory.getPizzaDataForModification().setElevenInchPizzaPrice(Double.parseDouble(this.pizzaPrice1.getText()));
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Entry creation failed: Please check blank fields!\n",
-                        "Failed",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Entry creation failed: Please check blank fields!\n",
-                        "Failed",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                return;
-            }
-
-            try {
-                Inventory.getController().edit(inventory.getPizzaDataForModification());
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Update successful!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Update failed!\n" + ex.getMessage(),
-                        "Success",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        returnToMain();
-    }//GEN-LAST:event_actionAddPizzaActionPerformed
-
-    private void searchKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKeyActionPerformed
-        search(searchKey.getText());
-    }//GEN-LAST:event_searchKeyActionPerformed
-
-    private void searchKeyCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchKeyCaretUpdate
-        search(searchKey.getText());
-    }//GEN-LAST:event_searchKeyCaretUpdate
-
-    private void searchAvailableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchAvailableFocusGained
-        searchAvailable.setText("");
-    }//GEN-LAST:event_searchAvailableFocusGained
-
-    private void searchAvailableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchAvailableFocusLost
-        searchAvailable.setText("Search");
-    }//GEN-LAST:event_searchAvailableFocusLost
-
-    private void searchAvailableCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchAvailableCaretUpdate
-        for (int i = 0; i < availableSelection.getModel().getSize(); i++) {
-            System.out.println(i);
-            if (searchAvailable.getText().toUpperCase()
-                    .contains(availableSelection.getModel().getElementAt(i).toString().toUpperCase())) {
-                availableSelection.setSelectedIndex(i);
-            }
-        }
-        System.out.println(availableSelection.getModel().getSize());
-    }//GEN-LAST:event_searchAvailableCaretUpdate
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addedList.addElement(availableSelection.getSelectedValue());
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        ManagerInterface managerInterface = new ManagerInterface();
-        managerInterface.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
