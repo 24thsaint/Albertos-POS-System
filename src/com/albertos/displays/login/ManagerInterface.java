@@ -5,6 +5,7 @@
  */
 package com.albertos.displays.login;
 
+import com.albertos.cashier.CashierManagement;
 import com.albertos.displays.InventoryInterface;
 
 /**
@@ -55,7 +56,6 @@ public class ManagerInterface extends javax.swing.JFrame {
 
         cashierButton.setBackground(new java.awt.Color(153, 153, 153));
         cashierButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        cashierButton.setForeground(new java.awt.Color(0, 0, 0));
         cashierButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/AS.png"))); // NOI18N
         cashierButton.setText("Cashier Registration");
         cashierButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
@@ -67,7 +67,6 @@ public class ManagerInterface extends javax.swing.JFrame {
 
         inventoryButton.setBackground(new java.awt.Color(153, 153, 153));
         inventoryButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        inventoryButton.setForeground(new java.awt.Color(0, 0, 0));
         inventoryButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/palet01.png"))); // NOI18N
         inventoryButton.setText("Inventory");
         inventoryButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
@@ -79,39 +78,38 @@ public class ManagerInterface extends javax.swing.JFrame {
 
         menuManagerButton.setBackground(new java.awt.Color(153, 153, 153));
         menuManagerButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        menuManagerButton.setForeground(new java.awt.Color(0, 0, 0));
         menuManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/208193452.png"))); // NOI18N
         menuManagerButton.setText("Menu Manager");
         menuManagerButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
 
         cashierManagerButton.setBackground(new java.awt.Color(153, 153, 153));
         cashierManagerButton.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        cashierManagerButton.setForeground(new java.awt.Color(0, 0, 0));
         cashierManagerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/personal_loan.png"))); // NOI18N
         cashierManagerButton.setText("Cashier Manager");
         cashierManagerButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        cashierManagerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashierManagerButtonActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(153, 153, 153));
         jButton5.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("jButton5");
         jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
 
         jButton6.setBackground(new java.awt.Color(153, 153, 153));
         jButton6.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("jButton6");
         jButton6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
 
         jButton7.setBackground(new java.awt.Color(153, 153, 153));
         jButton7.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(0, 0, 0));
         jButton7.setText("jButton7");
         jButton7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
 
         jButton8.setBackground(new java.awt.Color(153, 153, 153));
         jButton8.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(0, 0, 0));
         jButton8.setText("jButton8");
         jButton8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
 
@@ -215,6 +213,11 @@ public class ManagerInterface extends javax.swing.JFrame {
         inventoryInterface.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_inventoryButtonActionPerformed
+
+    private void cashierManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierManagerButtonActionPerformed
+        CashierManagement cashierManagement = new CashierManagement();
+        cashierManagement.setVisible(true);
+    }//GEN-LAST:event_cashierManagerButtonActionPerformed
 
     /**
      * @param args the command line arguments

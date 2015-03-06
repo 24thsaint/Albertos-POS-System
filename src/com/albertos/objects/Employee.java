@@ -8,10 +8,10 @@ package com.albertos.objects;
 import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.controllers.EMFactory;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -31,6 +31,34 @@ public class Employee implements Serializable {
 
     private String username;
     private String password;
+
+    // @Temporal(TemporalType.TIMESTAMP)
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AccessLog> login = new ArrayList<>();
+
+    //  @Temporal(TemporalType.TIMESTAMP)
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<AccessLog> logout = new ArrayList<>();
+
+    public void employeeLogin() {
+        AccessLog accessLog = new AccessLog();
+        accessLog.setAccessType(com.albertos.objects.enumerations.AccessType.LOGIN);
+        accessLog.setAccessTime(new Date());
+    }
+
+    public void employeeLogout() {
+        AccessLog accessLog = new AccessLog();
+        accessLog.setAccessType(com.albertos.objects.enumerations.AccessType.LOGOUT);
+        accessLog.setAccessTime(new Date());
+    }
+
+    public List<AccessLog> getLoginLogs() {
+        return login;
+    }
+
+    public List<AccessLog> getLogoutLogs() {
+        return logout;
+    }
 
     public String getLastname() {
         return lastname;
