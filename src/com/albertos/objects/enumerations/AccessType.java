@@ -18,5 +18,16 @@ package com.albertos.objects.enumerations;
  * @author Rave Noren Gidor-Sambo Villavicencio-Arevalo
  */
 public enum AccessType {
+
     LOGIN, LOGOUT;
+
+    public String toString() {
+        switch (this) {
+            case LOGIN:
+                return "LOGIN";
+            case LOGOUT:
+                return "LOGOUT";
+        }
+        return "-Undefined-";
+    }
 }

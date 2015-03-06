@@ -6,6 +6,7 @@ package com.albertos.cashier;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
+import com.albertos.objects.AccessLog;
 import com.albertos.objects.Employee;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +32,7 @@ public class CashierManagement extends javax.swing.JFrame {
         dtm = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Cashier Name", "Login Time", "Logout Time"
+                    "Cashier Name", "Time", "Access Type"
                 }
         );
         jScrollPane1.setViewportView(jTable1);
@@ -40,11 +41,18 @@ public class CashierManagement extends javax.swing.JFrame {
 
         for (Employee employee : employees) {
             String data1 = employee.getFirstName() + " " + employee.getLastname();
-            String data2 = employee.getLoginLogs().get(0).getAccessTime().toString();
-            String data3 = employee.getLogoutLogs().get(0).getAccessTime().toString();
-            String[] data = {data1, data2, data3};
+            String data2 = null;
+            String data3 = null;
 
-            dtm.addRow(data);
+            for (AccessLog a : employee.getLogs()) {
+                data2 = a.getAccessTime().toString();
+                data3 = a.getAccessType().name();
+
+                String[] data = {data1, data2, data3};
+                System.out.println(data2);
+                dtm.addRow(data);
+            }
+
         }
 
         jTable1.setModel(dtm);
@@ -119,7 +127,7 @@ public class CashierManagement extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cashier Name", "Login Time", "Logout Time"
+                "Cashier Name", "Time", "Access Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -190,7 +198,22 @@ public class CashierManagement extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(showAllButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,6 +232,7 @@ public class CashierManagement extends javax.swing.JFrame {
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
         refreshTable();
+        System.out.println("Table refreshed");
     }//GEN-LAST:event_showAllButtonActionPerformed
 
     /**

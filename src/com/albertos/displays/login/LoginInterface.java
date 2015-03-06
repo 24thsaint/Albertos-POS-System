@@ -5,7 +5,11 @@
  */
 package com.albertos.displays.login;
 
+import com.albertos.controllers.EMFactory;
+import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.objects.Employee;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
@@ -14,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author Quim
  */
 public class LoginInterface extends javax.swing.JFrame {
+
+    private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
 
     /**
      * Creates new form LoginSystem
@@ -160,12 +166,22 @@ public class LoginInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Invalid username and password", "Confirm", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (employee != null) {
-            System.out.println(employee.getFirstName());
-            ManagerInterface manager = new ManagerInterface();
-            manager.setVisible(true);
-            this.dispose();
-            employee.employeeLogin();
+        if (employee == null) {
+            return;
+        }
+
+        System.out.println(employee.getFirstName());
+        ManagerInterface manager = new ManagerInterface();
+        manager.setVisible(true);
+        this.dispose();
+        employee.employeeLogin();
+        //employee.employeeLogout();
+
+        try {
+            controller.edit(employee);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginInterface.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
