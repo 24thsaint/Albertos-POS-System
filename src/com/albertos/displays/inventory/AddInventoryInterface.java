@@ -8,7 +8,6 @@ package com.albertos.displays.inventory;
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.IngredientJpaController;
 import com.albertos.objects.Ingredient;
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
 import javax.swing.JOptionPane;
 
 /**
