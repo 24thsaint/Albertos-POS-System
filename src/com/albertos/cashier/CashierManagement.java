@@ -100,7 +100,7 @@ public class CashierManagement extends javax.swing.JFrame {
         cahierManagementPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        name = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         showAllButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -124,9 +124,9 @@ public class CashierManagement extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(5, 3, 0));
         jLabel2.setText("Cashier Name:");
 
-        name.addActionListener(new java.awt.event.ActionListener() {
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameActionPerformed(evt);
+                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -181,53 +181,49 @@ public class CashierManagement extends javax.swing.JFrame {
         cahierManagementPanel.setLayout(cahierManagementPanelLayout);
         cahierManagementPanelLayout.setHorizontalGroup(
             cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(cahierManagementPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cahierManagementPanelLayout.createSequentialGroup()
-                        .addGap(0, 126, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(208, 208, 208)
-                        .addComponent(showAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-            .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(cahierManagementPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
-                        .addGroup(cahierManagementPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addContainerGap()))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel2)
+                .addGap(5, 5, 5)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(searchButton))
+            .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(showAllButton)
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         cahierManagementPanelLayout.setVerticalGroup(
             cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(showAllButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(cahierManagementPanelLayout.createSequentialGroup()
-                    .addGap(6, 6, 6)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addGap(340, 340, 340)))
+                    .addComponent(jLabel1)
+                    .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel2))
+                    .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(searchButton)))
+                .addGap(5, 5, 5)
+                .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cahierManagementPanelLayout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addComponent(showAllButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cahierManagementPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(cahierManagementPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +253,7 @@ public class CashierManagement extends javax.swing.JFrame {
 
     private void search() {
         try {
-            Employee employee = controller.findEmployeeByName(name.getText());
+            Employee employee = controller.findEmployeeByName(jTextField1.getText());
             refreshTable(employee);
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null,
@@ -277,9 +273,9 @@ public class CashierManagement extends javax.swing.JFrame {
         System.out.println("Table refreshed");
     }//GEN-LAST:event_showAllButtonActionPerformed
 
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         search();
-    }//GEN-LAST:event_nameActionPerformed
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,7 +322,7 @@ public class CashierManagement extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField name;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton searchButton;
     private javax.swing.JButton showAllButton;
     // End of variables declaration//GEN-END:variables
