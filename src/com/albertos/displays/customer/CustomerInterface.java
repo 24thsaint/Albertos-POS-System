@@ -5,6 +5,8 @@
  */
 package com.albertos.displays.customer;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hero
@@ -16,7 +18,9 @@ public class CustomerInterface extends javax.swing.JFrame {
      */
     public CustomerInterface() {
         initComponents();
+        dtm = (DefaultTableModel) jTable1.getModel();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,9 +34,13 @@ public class CustomerInterface extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         iconLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        CutomerTextArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        totalLabel = new javax.swing.JLabel();
+        changeLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setAlwaysOnTop(true);
 
@@ -42,22 +50,7 @@ public class CustomerInterface extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         iconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/CustomerICon.png"))); // NOI18N
-        jPanel2.add(iconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 434, 460));
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 153));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setForeground(new java.awt.Color(1, 1, 1));
-        jScrollPane1.setViewportBorder(null);
-
-        CutomerTextArea.setEditable(false);
-        CutomerTextArea.setBackground(new java.awt.Color(255, 255, 153));
-        CutomerTextArea.setColumns(20);
-        CutomerTextArea.setForeground(new java.awt.Color(1, 1, 1));
-        CutomerTextArea.setRows(5);
-        CutomerTextArea.setBorder(null);
-        jScrollPane1.setViewportView(CutomerTextArea);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 340, 440));
+        jPanel2.add(iconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 434, 460));
 
         jLabel1.setFont(new java.awt.Font("Century Schoolbook L", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
@@ -65,6 +58,54 @@ public class CustomerInterface extends javax.swing.JFrame {
         jLabel1.setText("Albertos Pizza");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 800, 80));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Description", "Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(300);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(300);
+        }
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 390, 290));
+
+        totalLabel.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 24)); // NOI18N
+        totalLabel.setForeground(new java.awt.Color(1, 1, 1));
+        totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalLabel.setText("Php 0.00");
+        totalLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(totalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 170, 50));
+
+        changeLabel.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 24)); // NOI18N
+        changeLabel.setForeground(new java.awt.Color(172, 2, 2));
+        changeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        changeLabel.setText("Php 0.00");
+        changeLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(changeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 480, 170, 50));
+
+        jLabel2.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(1, 1, 1));
+        jLabel2.setText("Total Amount");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("DejaVu Serif Condensed", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(1, 1, 1));
+        jLabel3.setText("Change");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, -1, -1));
 
         jPanel1.add(jPanel2, "card2");
 
@@ -74,7 +115,7 @@ public class CustomerInterface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 818, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,12 +163,39 @@ public class CustomerInterface extends javax.swing.JFrame {
         });
     }
 
+    public void addEntry(String [] entry){
+        dtm.addRow(entry);
+        
+    }
+    
+    public void setTotal(int total){
+        totalLabel.setText(String.valueOf("Php " + total));
+        
+    }
+    
+    public void setChange(int change){
+        changeLabel.setText(String.valueOf("Php " + change));
+        
+    }
+    public void refreshInterface(){
+        dtm.setNumRows(0);
+        totalLabel.setText("Php 0.00");
+        changeLabel.setText("Php 0.00");
+    }
+    
+    private CashierInterface cashier;
+    private DefaultTableModel dtm;
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea CutomerTextArea;
+    private javax.swing.JLabel changeLabel;
     private javax.swing.JLabel iconLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables
 }
