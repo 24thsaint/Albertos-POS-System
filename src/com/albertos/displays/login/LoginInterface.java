@@ -7,7 +7,10 @@ package com.albertos.displays.login;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
+import com.albertos.displays.customer.CashierInterface;
+import com.albertos.displays.customer.CustomerInterface;
 import com.albertos.objects.Employee;
+import com.albertos.objects.enumerations.AccountType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
@@ -170,11 +173,22 @@ public class LoginInterface extends javax.swing.JFrame {
             return;
         }
 
-        System.out.println(employee.getFirstName());
-        ManagerInterface manager = new ManagerInterface();
-        manager.setVisible(true);
+        if (employee.getAccountType() == AccountType.MANAGER) {
+            ManagerInterface manager = new ManagerInterface();
+            manager.setEmployee(employee);
+            manager.setVisible(true);
+        } else {
+            CashierInterface cashierInterface = new CashierInterface();
+            CustomerInterface customerInterface = new CustomerInterface();
+            cashierInterface.setoutput(customerInterface);
+            cashierInterface.setEmployee(employee);
+            
+            cashierInterface.setVisible(true);
+            customerInterface.setVisible(true);
+        }
+
         this.dispose();
-        employee.employeeLogin();        
+        employee.employeeLogin();
 
         try {
             controller.edit(employee);

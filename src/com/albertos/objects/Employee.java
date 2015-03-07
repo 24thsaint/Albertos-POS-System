@@ -7,6 +7,7 @@ package com.albertos.objects;
 
 import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.controllers.EMFactory;
+import com.albertos.objects.enumerations.AccountType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +33,9 @@ public class Employee implements Serializable {
     private String username;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
     // @Temporal(TemporalType.TIMESTAMP)
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AccessLog> logs = new ArrayList<>();
@@ -52,6 +56,14 @@ public class Employee implements Serializable {
 
     public List<AccessLog> getLogs() {
         return logs;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     public String getLastname() {
@@ -133,6 +145,6 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return "EMFactory.EmployeeRegistration[ id=" + id + " ]";
-    }   
+    }
 
 }

@@ -8,6 +8,7 @@ package com.albertos.displays.login;
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.objects.Employee;
+import com.albertos.objects.enumerations.AccountType;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -68,6 +69,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
         cancelButton = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        isManager = new javax.swing.JCheckBox();
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Gender:");
@@ -170,6 +172,14 @@ public class RegistrationInterface extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Cashier Registration");
 
+        isManager.setText("Manager Account?");
+        isManager.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        isManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                isManagerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -214,20 +224,23 @@ public class RegistrationInterface extends javax.swing.JFrame {
                         .addComponent(jLabel15))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6))
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(isManager)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(male)
-                                .addGap(18, 18, 18)
-                                .addComponent(female))
-                            .addComponent(address)
-                            .addComponent(lastName)
-                            .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6))
+                                .addGap(60, 60, 60)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(male)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(female))
+                                    .addComponent(address)
+                                    .addComponent(lastName)
+                                    .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,7 +251,9 @@ public class RegistrationInterface extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(isManager)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(firstName, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -353,6 +368,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
         employee.setAddress(address.getText());
         employee.setUsername(username.getText());
         employee.setPassword(passwordTwo.getText());
+        employee.setAccountType(isManager.isSelected() ? AccountType.MANAGER : AccountType.CASHIER);
 
         controller.create(employee);
 
@@ -367,6 +383,10 @@ public class RegistrationInterface extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void isManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isManagerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_isManagerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -413,6 +433,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
     private javax.swing.JTextField email;
     private javax.swing.JRadioButton female;
     private javax.swing.JTextField firstName;
+    private javax.swing.JCheckBox isManager;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

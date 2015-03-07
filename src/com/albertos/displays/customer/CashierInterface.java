@@ -13,7 +13,16 @@
  */
 package com.albertos.displays.customer;
 
+import com.albertos.controllers.EMFactory;
+import com.albertos.controllers.EmployeeJpaController;
+import com.albertos.controllers.PizzaJpaController;
+import com.albertos.displays.login.LoginInterface;
+import com.albertos.objects.Employee;
+import com.albertos.objects.Pizza;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,6 +39,13 @@ public class CashierInterface extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         summaryTable = (DefaultTableModel) summary.getModel();
+        dlm = new DefaultListModel<>();
+
+        for (Pizza p : controller.findPizzaEntities()) {
+            dlm.addElement(p);
+        }
+
+        menuList.setModel(dlm);
     }
 
     /**
@@ -44,8 +60,6 @@ public class CashierInterface extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        menu = new javax.swing.JList();
         jTextField1 = new javax.swing.JTextField();
         nine = new javax.swing.JRadioButton();
         eleven = new javax.swing.JRadioButton();
@@ -56,7 +70,9 @@ public class CashierInterface extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         change = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        logoutAction = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        menuList = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
         summary = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -73,17 +89,6 @@ public class CashierInterface extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 153));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pizza Selection", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("DejaVu Serif Condensed", 1, 18), new java.awt.Color(1, 1, 1))); // NOI18N
         jPanel2.setForeground(new java.awt.Color(1, 1, 1));
-
-        menu.setBackground(new java.awt.Color(255, 255, 153));
-        menu.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
-        menu.setForeground(new java.awt.Color(42, 42, 42));
-        menu.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "PIzza 1", "PIzza 2", "PIzza 3", "PIzza 4" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        menu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(menu);
 
         jTextField1.setText("Search");
 
@@ -134,6 +139,11 @@ public class CashierInterface extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(37, 37, 37));
         jButton3.setText("CANCEL TRANSACTION");
         jButton3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         change.setFont(new java.awt.Font("DejaVu Sans", 1, 24)); // NOI18N
         change.setForeground(new java.awt.Color(255, 0, 0));
@@ -141,11 +151,19 @@ public class CashierInterface extends javax.swing.JFrame {
         change.setText("Php 0.00");
         change.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 153));
-        jButton4.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(37, 37, 37));
-        jButton4.setText("LOGOUT");
-        jButton4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        logoutAction.setBackground(new java.awt.Color(255, 255, 153));
+        logoutAction.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        logoutAction.setForeground(new java.awt.Color(37, 37, 37));
+        logoutAction.setText("LOGOUT");
+        logoutAction.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        logoutAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionActionPerformed(evt);
+            }
+        });
+
+        menuList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(menuList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,7 +176,7 @@ public class CashierInterface extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
+                        .addComponent(logoutAction, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                     .addComponent(change, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
@@ -168,8 +186,8 @@ public class CashierInterface extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(paid, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(nine)
                                 .addComponent(eleven, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -181,15 +199,17 @@ public class CashierInterface extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(nine)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eleven)
                         .addGap(31, 31, 31)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,7 +223,7 @@ public class CashierInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(logoutAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -297,13 +317,13 @@ public class CashierInterface extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-private void refreshInterface() {
+
+    private void refreshInterface() {
         summaryTable.setRowCount(0);
         totalPriceLabel.setText("Php 0.00");
         paid.setText("");
         change.setText("Php 0.00");
         output.refreshInterface();
-        
 
     }
 
@@ -312,38 +332,68 @@ private void refreshInterface() {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int payment = Integer.parseInt(paid.getText());
-        int changeMoney = payment - totalPrice;
+        double payment = Double.parseDouble(paid.getText());
+        double changeMoney = payment - totalPrice;
+        output.setPayment(Double.parseDouble(paid.getText()));
         output.setChange(changeMoney);
 
         this.change.setText("Php " + changeMoney + "");
 
-        JOptionPane.showMessageDialog(rootPane, "Close Drawer to Continue", "Message", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane, "[EMULATE] Close Drawer to Continue", "Message", JOptionPane.INFORMATION_MESSAGE);
         refreshInterface();
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Pizza pizza = (Pizza) menuList.getSelectedValue();
+
         Random random = new Random();
-        int randPrice = random.nextInt(200);
+        double pizzaPrice = nine.isSelected()
+                ? pizza.getNineInchPizzaPrice()
+                : pizza.getElevenInchPizzaPrice();
 
-        String description = (nine.isSelected() ? "9" : "11") + "\" " + menu.getSelectedValue();
-        String price = "Php " + randPrice;
+        String description = (nine.isSelected() ? "9" : "11") + "\" " + menuList.getSelectedValue();
+        String price = "Php " + pizzaPrice;
 
-        String [] data = {description, price};
+        String[] data = {description, price};
         summaryTable.addRow(data);
         output.addEntry(data);
 
-        totalPrice += randPrice;
+        totalPrice += pizzaPrice;
         totalPriceLabel.setText(String.valueOf("Php " + totalPrice));
         output.setTotal(totalPrice);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void logoutActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionActionPerformed
+        employee.employeeLogout();
+        try {
+            eController.edit(employee);
+        } catch (Exception ex) {
+            Logger.getLogger(CashierInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.dispose();
+        output.dispose();
+        new LoginInterface().setVisible(true);
+    }//GEN-LAST:event_logoutActionActionPerformed
+
     private DefaultTableModel summaryTable;
-    private int totalPrice = 0;
+    private double totalPrice = 0;
     private CustomerInterface output;
+    private DefaultListModel<Pizza> dlm;
+    private PizzaJpaController controller = new PizzaJpaController(EMFactory.getEmf());
+    private EmployeeJpaController eController = new EmployeeJpaController(EMFactory.getEmf());
+    private Employee employee;
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     /**
      * @param args the command line arguments
@@ -387,18 +437,18 @@ private void refreshInterface() {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JList menu;
+    private javax.swing.JButton logoutAction;
+    private javax.swing.JList menuList;
     private javax.swing.JRadioButton nine;
     private javax.swing.JTextField paid;
     private javax.swing.JTable summary;

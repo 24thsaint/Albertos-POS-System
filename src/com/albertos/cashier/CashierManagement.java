@@ -50,7 +50,7 @@ public class CashierManagement extends javax.swing.JFrame {
                 data2 = a.getAccessTime().toString();
                 data3 = a.getAccessType().name();
 
-                String[] data = {data1, data2, data3};                
+                String[] data = {data1, data2, data3};
                 dtm.addRow(data);
             }
 
@@ -76,7 +76,7 @@ public class CashierManagement extends javax.swing.JFrame {
             data2 = a.getAccessTime().toString();
             data3 = a.getAccessType().name();
 
-            String[] data = {data1, data2, data3};            
+            String[] data = {data1, data2, data3};
             dtm.addRow(data);
         }
 
@@ -100,7 +100,7 @@ public class CashierManagement extends javax.swing.JFrame {
         cahierManagementPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        searchKey = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         showAllButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -124,9 +124,9 @@ public class CashierManagement extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(5, 3, 0));
         jLabel2.setText("Cashier Name:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchKey.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchKeyActionPerformed(evt);
             }
         });
 
@@ -193,7 +193,7 @@ public class CashierManagement extends javax.swing.JFrame {
                             .addGroup(cahierManagementPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(5, 5, 5)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(searchButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,7 +213,7 @@ public class CashierManagement extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cahierManagementPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton)
                             .addComponent(showAllButton))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,7 +257,7 @@ public class CashierManagement extends javax.swing.JFrame {
 
     private void search() {
         try {
-            Employee employee = controller.findEmployeeByName(jTextField1.getText());
+            Employee employee = controller.findEmployeeByName(searchKey.getText());
             refreshTable(employee);
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null,
@@ -273,13 +273,16 @@ public class CashierManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
-        refreshTable();
-        System.out.println("Table refreshed");
+        refreshTable();        
     }//GEN-LAST:event_showAllButtonActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        search();
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void searchKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchKeyActionPerformed
+        if (searchKey.getText().isEmpty()) {
+            refreshTable();
+        } else {
+            search();
+        }
+    }//GEN-LAST:event_searchKeyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,8 +329,8 @@ public class CashierManagement extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchKey;
     private javax.swing.JButton showAllButton;
     // End of variables declaration//GEN-END:variables
 }
