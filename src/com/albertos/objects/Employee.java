@@ -133,12 +133,6 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return "EMFactory.EmployeeRegistration[ id=" + id + " ]";
-    }
-
-    public static Employee validate(String username, String password) {
-        EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
-
-        return controller.validate(username, password);
-    }
+    }   
 
 }

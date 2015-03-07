@@ -161,7 +161,7 @@ public class LoginInterface extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         Employee employee = null;
         try {
-            employee = Employee.validate(jTextField1.getText(), jPasswordField1.getText());
+            employee = controller.validate(jTextField1.getText(), jPasswordField1.getText());
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(rootPane, "Invalid username and password", "Confirm", JOptionPane.ERROR_MESSAGE);
         }
@@ -174,8 +174,7 @@ public class LoginInterface extends javax.swing.JFrame {
         ManagerInterface manager = new ManagerInterface();
         manager.setVisible(true);
         this.dispose();
-        employee.employeeLogin();
-        //employee.employeeLogout();
+        employee.employeeLogin();        
 
         try {
             controller.edit(employee);

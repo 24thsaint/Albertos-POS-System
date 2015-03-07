@@ -1,4 +1,7 @@
 
+import javax.swing.JOptionPane;
+
+
 
 /*
  *  ==++++++++++++++++++++++++++++++++++++++++++++++++++++==
@@ -20,6 +23,12 @@
 public class PizzaTest {
 
     public static void main(String[] args) {
-
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?", "Sure na sure?", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm==JOptionPane.YES_OPTION) {
+            System.out.println("You are sure");
+        } else {
+            System.out.println("You are not sure");
+        }
     }
 }

@@ -1,12 +1,10 @@
- package com.albertos.controllers;
+package com.albertos.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import com.albertos.objects.Employee;
 import com.albertos.controllers.exceptions.NonexistentEntityException;
 import java.io.Serializable;
@@ -34,7 +32,7 @@ public class EmployeeJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public Employee validate(String username, String password) throws NoResultException{
+    public Employee validate(String username, String password) throws NoResultException {
         EntityManager em = null;
         em = getEntityManager();
         Query query = em.createQuery("SELECT a FROM "
@@ -150,4 +148,11 @@ public class EmployeeJpaController implements Serializable {
         }
     }
 
+    public Employee findEmployeeByName(String name) {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT e FROM Employee e WHERE e.firstName LIKE :nn OR e.lastname LIKE :nn");
+        query.setParameter("nn", "%" + name + "%");
+        query.setMaxResults(1);
+        return (Employee) query.getSingleResult();
+    }
 }
