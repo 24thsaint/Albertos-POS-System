@@ -23,6 +23,11 @@ import javax.swing.JOptionPane;
 public class LoginInterface extends javax.swing.JFrame {
 
     private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
+    private boolean hasClosed = false;
+
+    public void close() {
+        hasClosed = true;
+    }
 
     /**
      * Creates new form LoginSystem
@@ -176,18 +181,26 @@ public class LoginInterface extends javax.swing.JFrame {
         if (employee.getAccountType() == AccountType.MANAGER) {
             ManagerInterface manager = new ManagerInterface();
             manager.setEmployee(employee);
+            manager.storeClosed(hasClosed);
             manager.setVisible(true);
         } else {
+
+            if (hasClosed) {
+                JOptionPane.showMessageDialog(null,
+                        "Store is still closed.");
+                return;
+            }
+
             CashierInterface cashierInterface = new CashierInterface();
             CustomerInterface customerInterface = new CustomerInterface();
             cashierInterface.setoutput(customerInterface);
             cashierInterface.setEmployee(employee);
-            
+
             cashierInterface.setVisible(true);
             customerInterface.setVisible(true);
         }
 
-        this.dispose();
+        this.setVisible(false);
         employee.employeeLogin();
 
         try {

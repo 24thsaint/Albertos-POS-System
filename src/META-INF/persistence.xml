@@ -6,6 +6,8 @@
     <class>com.albertos.objects.Employee</class>
     <class>com.albertos.objects.Ingredient</class>
     <class>com.albertos.objects.AccessLog</class>
+    <class>com.albertos.objects.DateandSale</class>
+    <class>com.albertos.objects.Transaction</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/albertos_pos_system?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

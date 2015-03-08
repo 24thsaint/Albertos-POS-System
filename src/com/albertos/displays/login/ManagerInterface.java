@@ -6,13 +6,16 @@
 package com.albertos.displays.login;
 
 import com.albertos.cashier.CashierManagement;
+import com.albertos.controllers.DateandSaleJpaController;
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.displays.inventory.InventoryInterface;
 import com.albertos.displays.menu.MenuManagerInterface;
 import com.albertos.objects.Employee;
+import com.albertos.objects.SaleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +25,12 @@ public class ManagerInterface extends javax.swing.JFrame {
 
     private Employee employee;
     private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
+    private boolean hasClosed = false;
+    private SaleHandler saleHandler = new SaleHandler();
+
+    public void storeClosed(boolean status) {
+        hasClosed = status;
+    }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
@@ -53,9 +62,9 @@ public class ManagerInterface extends javax.swing.JFrame {
         menuManagerButton = new javax.swing.JButton();
         cashierManagerButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        showSummary = new javax.swing.JButton();
+        closingTime = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,27 +122,42 @@ public class ManagerInterface extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(153, 153, 153));
         jButton5.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton5.setText("jButton5");
+        jButton5.setText("Open Store");
         jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
-
-        jButton6.setBackground(new java.awt.Color(153, 153, 153));
-        jButton6.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton6.setText("jButton6");
-        jButton6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
-
-        jButton7.setBackground(new java.awt.Color(153, 153, 153));
-        jButton7.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton7.setText("jButton7");
-        jButton7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
-
-        jButton8.setBackground(new java.awt.Color(153, 153, 153));
-        jButton8.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/application-exit-2.png"))); // NOI18N
-        jButton8.setText("Logout");
-        jButton8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        showSummary.setBackground(new java.awt.Color(153, 153, 153));
+        showSummary.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        showSummary.setText("Show Sales Summary");
+        showSummary.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        showSummary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showSummaryActionPerformed(evt);
+            }
+        });
+
+        closingTime.setBackground(new java.awt.Color(153, 153, 153));
+        closingTime.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        closingTime.setText("Closing Time");
+        closingTime.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        closingTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closingTimeActionPerformed(evt);
+            }
+        });
+
+        logout.setBackground(new java.awt.Color(153, 153, 153));
+        logout.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/application-exit-2.png"))); // NOI18N
+        logout.setText("Logout");
+        logout.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 153), 1, true));
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
             }
         });
 
@@ -152,13 +176,13 @@ public class ManagerInterface extends javax.swing.JFrame {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menuManagerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cashierButton, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(closingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(inventoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cashierManagerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(showSummary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -179,11 +203,11 @@ public class ManagerInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(showSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(closingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -243,16 +267,62 @@ public class ManagerInterface extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_menuManagerButtonActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         employee.employeeLogout();
         try {
             controller.edit(employee);
         } catch (Exception ex) {
             Logger.getLogger(ManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
-        new LoginInterface().setVisible(true);
-    }//GEN-LAST:event_jButton8ActionPerformed
+        this.setVisible(false);
+        LoginInterface loginInterface = new LoginInterface();
+        if (hasClosed) {
+            loginInterface.close();
+        }
+        loginInterface.setVisible(true);
+    }//GEN-LAST:event_logoutActionPerformed
+
+    private void closingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closingTimeActionPerformed
+        if (!hasClosed) {
+
+            int confirm = JOptionPane.showConfirmDialog(null,
+                    "Are you sure it is closing time?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                saleHandler.closingTime();
+            } else {
+                //do nothing
+            }
+            hasClosed = true;
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Store manager " + employee.getFirstName() + " has already issued a close request.");
+        }
+    }//GEN-LAST:event_closingTimeActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (hasClosed) {
+            int confirm = JOptionPane.showConfirmDialog(null,
+                    "Are you sure it is opening time?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                hasClosed = false;
+            } else {
+                //do nothing
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Store is already open!");
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void showSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSummaryActionPerformed
+        saleHandler.displaySummary();
+    }//GEN-LAST:event_showSummaryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,16 +362,16 @@ public class ManagerInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cashierButton;
     private javax.swing.JButton cashierManagerButton;
+    private javax.swing.JButton closingTime;
     private javax.swing.JButton inventoryButton;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton logout;
     private javax.swing.JButton menuManagerButton;
+    private javax.swing.JButton showSummary;
     // End of variables declaration//GEN-END:variables
 }
