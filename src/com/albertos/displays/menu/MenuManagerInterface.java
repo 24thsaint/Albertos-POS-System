@@ -15,7 +15,7 @@ package com.albertos.displays.menu;
 
 import com.albertos.controllers.exceptions.NonexistentEntityException;
 import com.albertos.displays.login.ManagerInterface;
-import com.albertos.objects.Inventory;
+import com.albertos.objects.PizzaMenuManager;
 import com.albertos.objects.Pizza;
 import java.awt.CardLayout;
 import java.util.List;
@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuManagerInterface extends javax.swing.JFrame {
 
-    private Inventory inventory;
+    private PizzaMenuManager inventory;
     private Long modificationId;
     private final CardLayout card;
     private DefaultTableModel dtm;
@@ -48,7 +48,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         initComponents();
 
         DefaultListModel dlm = new DefaultListModel();
-        inventory = Inventory.getInstance();
+        inventory = PizzaMenuManager.getInstance();
 
         card = (CardLayout) rootPane.getLayout();
         dtm = (DefaultTableModel) resultTable.getModel();        
@@ -550,7 +550,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
             }
 
             try {
-                Inventory.getController().edit(inventory.getPizzaDataForModification());
+                PizzaMenuManager.getController().edit(inventory.getPizzaDataForModification());
 
                 JOptionPane.showMessageDialog(
                     null,
@@ -598,7 +598,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
             String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
 
             try {
-                Inventory.getController().destroy(Long.parseLong(id));
+                PizzaMenuManager.getController().destroy(Long.parseLong(id));
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(MenuManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -624,7 +624,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         isNew = false;
 
         String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
-        inventory.setPizzaDataForModification(Inventory.getController().findPizza(Long.parseLong(id)));
+        inventory.setPizzaDataForModification(PizzaMenuManager.getController().findPizza(Long.parseLong(id)));
 
         this.pizzaName.setText(inventory.getPizzaDataForModification().getName());
         this.pizzaDescription.setText(inventory.getPizzaDataForModification().getDescription());
@@ -675,7 +675,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
             resultTable.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
-        List<Pizza> pizzas = Inventory.getController().findPizzaEntities();
+        List<Pizza> pizzas = PizzaMenuManager.getController().findPizzaEntities();
 
         dtm = (DefaultTableModel) resultTable.getModel();
 

@@ -21,18 +21,18 @@ import javax.persistence.EntityExistsException;
  *
  * @author Rave Noren Gidor-Sambo Villavicencio-Arevalo
  */
-public class Inventory {
+public class PizzaMenuManager {
 
-    private Inventory() {
+    private PizzaMenuManager() {
     } // Instantiation defeated
 
-    private static Inventory singleInstance = null;
+    private static PizzaMenuManager singleInstance = null;
     private static PizzaJpaController pjc = null;
     private Pizza pizzaDataForModification = null;
 
-    public static Inventory getInstance() {
+    public static PizzaMenuManager getInstance() {
         if (singleInstance == null) {
-            singleInstance = new Inventory();
+            singleInstance = new PizzaMenuManager();
         }
         return singleInstance;
     }
