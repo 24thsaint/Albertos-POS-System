@@ -4,9 +4,7 @@ package com.albertos.displays.inventory;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.albertos.objects.DateandSale;
 import com.albertos.objects.Transaction;
-import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -58,6 +56,7 @@ public class SalesTotalDisplay extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         DailySaleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

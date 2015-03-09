@@ -67,6 +67,7 @@ public class ManagerInterface extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
