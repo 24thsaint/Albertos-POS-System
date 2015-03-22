@@ -19,7 +19,7 @@ import com.albertos.controllers.PizzaJpaController;
 import com.albertos.displays.login.LoginInterface;
 import com.albertos.objects.Employee;
 import com.albertos.objects.Pizza;
-import com.albertos.objects.SaleHandler;
+import com.albertos.objects.PizzaStoreManager;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -338,7 +338,7 @@ public class CashierInterface extends javax.swing.JFrame {
         paid.setText("");
         change.setText("Php 0.00");
         output.refreshInterface();
-
+        totalPrice = 0;
     }
 
     public void setoutput(CustomerInterface output) {
@@ -347,15 +347,27 @@ public class CashierInterface extends javax.swing.JFrame {
 
     private void checkOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutActionPerformed
         double payment = Double.parseDouble(paid.getText());
+
+        if (payment < totalPrice) {
+            JOptionPane.showMessageDialog(null,
+                    "Payment is lesser than amount, please check again.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         double changeMoney = payment - totalPrice;
         output.setPayment(Double.parseDouble(paid.getText()));
         output.setChange(changeMoney);
 
         this.change.setText("Php " + changeMoney + "");
 
-        saleHandler.sale(employee.getFirstName() + " " + employee.getLastname(), totalPrice, "Pizza Sale");
+        storeManager.sale(employee.getFirstName() + " " + employee.getLastname(), totalPrice, "Pizza Sale");
 
-        JOptionPane.showMessageDialog(rootPane, "[EMULATE] Close Drawer to Continue", "Message", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane,
+                "[EMULATE] Close Drawer to Continue",
+                "Message",
+                JOptionPane.INFORMATION_MESSAGE);
         refreshInterface();
 
     }//GEN-LAST:event_checkOutActionPerformed
@@ -410,9 +422,9 @@ public class CashierInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldFocusLost
 
     private void searchFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_searchFieldCaretUpdate
-        String key = searchField.getText();        
-        
-        for (int i = 0; i < dlm.getSize(); i++) {            
+        String key = searchField.getText();
+
+        for (int i = 0; i < dlm.getSize(); i++) {
             if (dlm.get(i).toString().toUpperCase().matches(key.toUpperCase())) {
                 menuList.setSelectedIndex(i);
                 break;
@@ -427,8 +439,8 @@ public class CashierInterface extends javax.swing.JFrame {
     private PizzaJpaController controller = new PizzaJpaController(EMFactory.getEmf());
     private EmployeeJpaController eController = new EmployeeJpaController(EMFactory.getEmf());
     private Employee employee;
-    private SaleHandler saleHandler = new SaleHandler();
-
+    private PizzaStoreManager storeManager = PizzaStoreManager.getInstance();
+    
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

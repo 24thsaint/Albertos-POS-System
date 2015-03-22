@@ -1,7 +1,9 @@
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
-
-
 
 /*
  *  ==++++++++++++++++++++++++++++++++++++++++++++++++++++==
@@ -23,12 +25,30 @@ import javax.swing.JOptionPane;
 public class PizzaTest {
 
     public static void main(String[] args) {
-        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?", "Sure na sure?", JOptionPane.YES_NO_OPTION);
-        
-        if (confirm==JOptionPane.YES_OPTION) {
-            System.out.println("You are sure");
-        } else {
-            System.out.println("You are not sure");
+        Scanner scanner = new Scanner(System.in);
+
+        Preferences preferences = Preferences.userRoot();
+        System.out.println(preferences.getBoolean("isOpen", true));
+
+        while (true) {
+            System.out.println("Press [1] to open, press [2] to close");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    preferences.remove("isOpen");
+                    preferences.putBoolean("isOpen", true);
+                    break;
+                case 2:
+                    preferences.remove("isOpen");
+                    preferences.putBoolean("isOpen", false);
+                    break;
+                case 3:
+                    preferences.remove("isOpen");
+                default: //do nothing
+            }
+
+            System.out.println("Store is " + (preferences.getBoolean("isOpen", true) ? "OPEN" : "CLOSED"));
         }
     }
 }

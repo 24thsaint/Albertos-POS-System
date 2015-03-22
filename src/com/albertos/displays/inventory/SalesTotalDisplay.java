@@ -93,6 +93,7 @@ public class SalesTotalDisplay extends javax.swing.JFrame {
         totalSales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalSales.setText("##");
 
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/albertos/resources/back.png"))); // NOI18N
         exit.setText("BACK");
         exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,9 +116,9 @@ public class SalesTotalDisplay extends javax.swing.JFrame {
                     .addComponent(totalSales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(jSeparator2)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(exit)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

@@ -10,6 +10,7 @@ import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.displays.customer.CashierInterface;
 import com.albertos.displays.customer.CustomerInterface;
 import com.albertos.objects.Employee;
+import com.albertos.objects.PizzaStoreManager;
 import com.albertos.objects.enumerations.AccountType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,11 +24,7 @@ import javax.swing.JOptionPane;
 public class LoginInterface extends javax.swing.JFrame {
 
     private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
-    private boolean hasClosed = false;
-
-    public void close() {
-        hasClosed = true;
-    }
+    private PizzaStoreManager storeManager = PizzaStoreManager.getInstance();
 
     /**
      * Creates new form LoginSystem
@@ -91,13 +88,10 @@ public class LoginInterface extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -180,17 +174,15 @@ public class LoginInterface extends javax.swing.JFrame {
 
         if (employee.getAccountType() == AccountType.MANAGER) {
             ManagerInterface manager = new ManagerInterface();
-            manager.setEmployee(employee);
-            manager.storeClosed(hasClosed);
+            manager.setEmployee(employee);            
             manager.setVisible(true);
         } else {
 
-            if (hasClosed) {
-                JOptionPane.showMessageDialog(null,
-                        "Store is still closed.");
+            if (!storeManager.isOpen()) {
+                JOptionPane.showMessageDialog(null, "Store is not open yet!");
                 return;
             }
-
+            
             CashierInterface cashierInterface = new CashierInterface();
             CustomerInterface customerInterface = new CustomerInterface();
             cashierInterface.setoutput(customerInterface);
@@ -208,7 +200,7 @@ public class LoginInterface extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(LoginInterface.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-        }
+        }                
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
@@ -236,6 +228,12 @@ public class LoginInterface extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

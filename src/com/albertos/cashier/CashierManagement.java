@@ -6,6 +6,7 @@ package com.albertos.cashier;
 
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
+import com.albertos.displays.login.ManagerInterface;
 import com.albertos.objects.AccessLog;
 import com.albertos.objects.Employee;
 import java.util.List;
@@ -106,6 +107,7 @@ public class CashierManagement extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -177,6 +179,16 @@ public class CashierManagement extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setMaxWidth(200);
         }
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 153));
+        jButton1.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        jButton1.setText("Return");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout cahierManagementPanelLayout = new javax.swing.GroupLayout(cahierManagementPanel);
         cahierManagementPanel.setLayout(cahierManagementPanelLayout);
         cahierManagementPanelLayout.setHorizontalGroup(
@@ -193,12 +205,13 @@ public class CashierManagement extends javax.swing.JFrame {
                             .addGroup(cahierManagementPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(5, 5, 5)
-                                .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchKey)
+                                .addGap(18, 18, 18)
                                 .addComponent(searchButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(showAllButton)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(40, 40, 40)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         cahierManagementPanelLayout.setVerticalGroup(
@@ -215,7 +228,8 @@ public class CashierManagement extends javax.swing.JFrame {
                         .addGroup(cahierManagementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(searchKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton)
-                            .addComponent(showAllButton))))
+                            .addComponent(showAllButton)
+                            .addComponent(jButton1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
@@ -284,6 +298,12 @@ public class CashierManagement extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchKeyActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ManagerInterface managerInterface = new ManagerInterface();
+        managerInterface.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -323,6 +343,7 @@ public class CashierManagement extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cahierManagementPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

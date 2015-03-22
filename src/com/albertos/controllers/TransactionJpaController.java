@@ -149,6 +149,8 @@ public class TransactionJpaController implements Serializable {
 
         Query query = em.createQuery("SELECT t FROM Transaction t WHERE YEAR( :dd ) = YEAR(NOW()) AND MONTH( :dd ) = MONTH(NOW()) AND DAY( :dd ) = DAY(NOW())");
         query.setParameter("dd", date);
+        
+        
 
         return query.getResultList();
     }

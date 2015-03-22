@@ -15,7 +15,7 @@ package com.albertos.displays.menu;
 
 import com.albertos.controllers.exceptions.NonexistentEntityException;
 import com.albertos.displays.login.ManagerInterface;
-import com.albertos.objects.Inventory;
+import com.albertos.objects.PizzaStoreManager;
 import com.albertos.objects.Pizza;
 import java.awt.CardLayout;
 import java.util.List;
@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityExistsException;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuManagerInterface extends javax.swing.JFrame {
 
-    private Inventory inventory;
+    private PizzaStoreManager inventory;
     private Long modificationId;
     private final CardLayout card;
     private DefaultTableModel dtm;
@@ -48,11 +47,12 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         initComponents();
 
         DefaultListModel dlm = new DefaultListModel();
-        inventory = Inventory.getInstance();
+        inventory = PizzaStoreManager.getInstance();
 
         card = (CardLayout) rootPane.getLayout();
-        dtm = (DefaultTableModel) resultTable.getModel();        
-        addedSelection = new JList(addedList);
+        dtm = (DefaultTableModel) resultTable.getModel();
+        addedSelection.setModel(addedList);
+        //addedSelection = new JList(addedList);
         refreshTable();
     }
 
@@ -93,8 +93,8 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         actionBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         availableSelection = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        add = new javax.swing.JButton();
+        remove = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         addedSelection = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
@@ -345,18 +345,23 @@ public class MenuManagerInterface extends javax.swing.JFrame {
 
         pizzaFieldsPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 250, 169));
 
-        jButton1.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton1.setText("Add >>");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        add.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        add.setText("Add >>");
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
-        pizzaFieldsPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 120, -1));
+        pizzaFieldsPanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 120, -1));
 
-        jButton2.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
-        jButton2.setText("<< Remove");
-        pizzaFieldsPanel.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 120, -1));
+        remove.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 14)); // NOI18N
+        remove.setText("<< Remove");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
+        pizzaFieldsPanel.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 120, -1));
 
         addedSelection.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(addedSelection);
@@ -470,16 +475,16 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         for (int i = 0; i < availableSelection.getModel().getSize(); i++) {
             System.out.println(i);
             if (searchAvailable.getText().toUpperCase()
-                .contains(availableSelection.getModel().getElementAt(i).toString().toUpperCase())) {
+                    .contains(availableSelection.getModel().getElementAt(i).toString().toUpperCase())) {
                 availableSelection.setSelectedIndex(i);
             }
         }
         System.out.println(availableSelection.getModel().getSize());
     }//GEN-LAST:event_searchAvailableCaretUpdate
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addedList.addElement(availableSelection.getSelectedValue());
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        addedList.addElement(availableSelection.getSelectedValue().toString());
+    }//GEN-LAST:event_addActionPerformed
 
     private void actionBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionBackActionPerformed
         returnToMain();
@@ -490,41 +495,41 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         if (isNew) {
             try {
                 inventory.addPizza(
-                    this.pizzaName.getText(),
-                    this.pizzaDescription.getText(),
-                    Double.parseDouble(this.pizzaPrice.getText()),
-                    Double.parseDouble(this.pizzaPrice1.getText())
+                        this.pizzaName.getText(),
+                        this.pizzaDescription.getText(),
+                        Double.parseDouble(this.pizzaPrice.getText()),
+                        Double.parseDouble(this.pizzaPrice1.getText())
                 );
             } catch (EntityExistsException e) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Entry creation failed!\n" + e.getMessage(),
-                    "Failed",
-                    JOptionPane.ERROR_MESSAGE);
+                        null,
+                        "Entry creation failed!\n" + e.getMessage(),
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Entry creation failed: Please check blank fields!\n",
-                    "Failed",
-                    JOptionPane.ERROR_MESSAGE
+                        null,
+                        "Entry creation failed: Please check blank fields!\n",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE
                 );
                 return;
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Entry creation failed: Please check blank fields!\n",
-                    "Failed",
-                    JOptionPane.ERROR_MESSAGE
+                        null,
+                        "Entry creation failed: Please check blank fields!\n",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
             JOptionPane.showMessageDialog(
-                null,
-                "New Pizza menu created successfuly!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE);
+                    null,
+                    "New Pizza menu created successfuly!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
         } else {
             try {
                 inventory.getPizzaDataForModification().setName(this.pizzaName.getText());
@@ -533,36 +538,36 @@ public class MenuManagerInterface extends javax.swing.JFrame {
                 inventory.getPizzaDataForModification().setElevenInchPizzaPrice(Double.parseDouble(this.pizzaPrice1.getText()));
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Entry creation failed: Please check blank fields!\n",
-                    "Failed",
-                    JOptionPane.ERROR_MESSAGE
+                        null,
+                        "Entry creation failed: Please check blank fields!\n",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE
                 );
                 return;
             } catch (IllegalArgumentException e) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Entry creation failed: Please check blank fields!\n",
-                    "Failed",
-                    JOptionPane.ERROR_MESSAGE
+                        null,
+                        "Entry creation failed: Please check blank fields!\n",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
             try {
-                Inventory.getController().edit(inventory.getPizzaDataForModification());
+                PizzaStoreManager.getController().edit(inventory.getPizzaDataForModification());
 
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Update successful!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        null,
+                        "Update successful!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(
-                    null,
-                    "Update failed!\n" + ex.getMessage(),
-                    "Success",
-                    JOptionPane.ERROR_MESSAGE);
+                        null,
+                        "Update failed!\n" + ex.getMessage(),
+                        "Success",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
         returnToMain();
@@ -588,17 +593,17 @@ public class MenuManagerInterface extends javax.swing.JFrame {
 
     private void actionDeletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionDeletedActionPerformed
         int confirmRequest = JOptionPane.showConfirmDialog(
-            null,
-            "Are you sure you want to delete the selected Pizza?",
-            "Confirm",
-            JOptionPane.YES_NO_OPTION);
+                null,
+                "Are you sure you want to delete the selected Pizza?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION);
 
         if (confirmRequest == JOptionPane.YES_OPTION) {
 
             String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
 
             try {
-                Inventory.getController().destroy(Long.parseLong(id));
+                PizzaStoreManager.getController().destroy(Long.parseLong(id));
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(MenuManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -612,10 +617,10 @@ public class MenuManagerInterface extends javax.swing.JFrame {
     private void actionModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionModifyActionPerformed
         if (resultTable.getSelectedRowCount() < 1) {
             JOptionPane.showMessageDialog(
-                null,
-                "Cannot modify: No pizza selected!",
-                "Warning",
-                JOptionPane.WARNING_MESSAGE);
+                    null,
+                    "Cannot modify: No pizza selected!",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -624,7 +629,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         isNew = false;
 
         String id = (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
-        inventory.setPizzaDataForModification(Inventory.getController().findPizza(Long.parseLong(id)));
+        inventory.setPizzaDataForModification(PizzaStoreManager.getController().findPizza(Long.parseLong(id)));
 
         this.pizzaName.setText(inventory.getPizzaDataForModification().getName());
         this.pizzaDescription.setText(inventory.getPizzaDataForModification().getDescription());
@@ -640,24 +645,26 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         search(searchKey.getText());
     }//GEN-LAST:event_searchKeyCaretUpdate
 
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        addedList.remove(addedSelection.getSelectedIndex());
+    }//GEN-LAST:event_removeActionPerformed
+
     private void refreshTable() {
         resultTable = new JTable();
         resultTable.setBackground(new java.awt.Color(255, 255, 102));
         resultTable.setForeground(new java.awt.Color(0, 0, 0));
-         resultTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Pizza Name", "Description"
-            }
+        resultTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "ID", "Pizza Name", "Description"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                 false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         resultTable.setGridColor(new java.awt.Color(0, 0, 0));
@@ -675,7 +682,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
             resultTable.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
-        List<Pizza> pizzas = Inventory.getController().findPizzaEntities();
+        List<Pizza> pizzas = PizzaStoreManager.getController().findPizzaEntities();
 
         dtm = (DefaultTableModel) resultTable.getModel();
 
@@ -749,6 +756,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
     private javax.swing.JButton actionDeleted;
     private javax.swing.JButton actionGo;
     private javax.swing.JButton actionModify;
+    private javax.swing.JButton add;
     private javax.swing.JList addedSelection;
     private javax.swing.JList availableSelection;
     private javax.swing.JButton cancelButton;
@@ -756,8 +764,6 @@ public class MenuManagerInterface extends javax.swing.JFrame {
     private javax.swing.JPanel displayPanel;
     private javax.swing.JLabel header;
     private javax.swing.JLabel headerSecondPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -774,6 +780,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
     private javax.swing.JTextField pizzaName;
     private javax.swing.JTextField pizzaPrice;
     private javax.swing.JTextField pizzaPrice1;
+    private javax.swing.JButton remove;
     private javax.swing.JTable resultTable;
     private javax.swing.JPanel rootPane;
     private javax.swing.JScrollPane scrollerPane;

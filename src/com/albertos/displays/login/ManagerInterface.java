@@ -6,13 +6,12 @@
 package com.albertos.displays.login;
 
 import com.albertos.cashier.CashierManagement;
-import com.albertos.controllers.DateandSaleJpaController;
 import com.albertos.controllers.EMFactory;
 import com.albertos.controllers.EmployeeJpaController;
 import com.albertos.displays.inventory.InventoryInterface;
 import com.albertos.displays.menu.MenuManagerInterface;
 import com.albertos.objects.Employee;
-import com.albertos.objects.SaleHandler;
+import com.albertos.objects.PizzaStoreManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,16 +21,11 @@ import javax.swing.JOptionPane;
  * @author hero
  */
 public class ManagerInterface extends javax.swing.JFrame {
-
+    
     private Employee employee;
-    private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());
-    private boolean hasClosed = false;
-    private SaleHandler saleHandler = new SaleHandler();
-
-    public void storeClosed(boolean status) {
-        hasClosed = status;
-    }
-
+    private EmployeeJpaController controller = new EmployeeJpaController(EMFactory.getEmf());    
+    private PizzaStoreManager storeManager = PizzaStoreManager.getInstance();
+    
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
@@ -275,53 +269,50 @@ public class ManagerInterface extends javax.swing.JFrame {
             Logger.getLogger(ManagerInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
-        LoginInterface loginInterface = new LoginInterface();
-        if (hasClosed) {
-            loginInterface.close();
-        }
-        loginInterface.setVisible(true);
+        
+        new LoginInterface().setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void closingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closingTimeActionPerformed
-        if (!hasClosed) {
-
-            int confirm = JOptionPane.showConfirmDialog(null,
-                    "Are you sure it is closing time?",
-                    "Confirm",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                saleHandler.closingTime();
-            } else {
-                //do nothing
-            }
-            hasClosed = true;
-        } else {
+        if (!storeManager.isOpen()) {
             JOptionPane.showMessageDialog(null,
                     "Store manager " + employee.getFirstName() + " has already issued a close request.");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "Are you sure it is closing time?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            storeManager.closingTime();
+            storeManager.setOpen(false);
+        } else {
+            //do nothing
         }
     }//GEN-LAST:event_closingTimeActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if (hasClosed) {
-            int confirm = JOptionPane.showConfirmDialog(null,
-                    "Are you sure it is opening time?",
-                    "Confirm",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                hasClosed = false;
-            } else {
-                //do nothing
-            }
-        } else {
+        if (storeManager.isOpen()) {
             JOptionPane.showMessageDialog(null,
                     "Store is already open!");
+            return;
         }
+        
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "Are you sure it is opening time?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            storeManager.setOpen(true);
+        }
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void showSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSummaryActionPerformed
-        saleHandler.displaySummary();
+        storeManager.displaySummary();
     }//GEN-LAST:event_showSummaryActionPerformed
 
     /**
