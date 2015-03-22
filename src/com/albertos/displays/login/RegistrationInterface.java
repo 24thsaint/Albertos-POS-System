@@ -99,6 +99,7 @@ public class RegistrationInterface extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTree1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 153));

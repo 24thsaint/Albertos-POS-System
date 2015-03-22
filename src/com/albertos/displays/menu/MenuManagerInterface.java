@@ -104,6 +104,7 @@ public class MenuManagerInterface extends javax.swing.JFrame {
         headerSecondPanel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         rootPane.setLayout(new java.awt.CardLayout());
 

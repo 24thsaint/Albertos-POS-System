@@ -56,6 +56,7 @@ public class LoginInterface extends javax.swing.JFrame {
         button1.setLabel("button1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 153));
 
